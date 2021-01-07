@@ -30,16 +30,7 @@ import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.identity.application.authentication.framework.config.ConfigurationFacade;
 import org.wso2.carbon.identity.application.authentication.framework.util.FrameworkUtils;
 
-import com.hkjc.wso2.identity.service.rest.service.ChangeAttributeService;
-import com.hkjc.wso2.identity.service.rest.service.ChangePasswordService;
-import com.hkjc.wso2.identity.service.rest.service.ChangeResidencyService;
-import com.hkjc.wso2.identity.service.rest.service.ChangeUserGroupService;
-import com.hkjc.wso2.identity.service.rest.service.CreateUserService;
-import com.hkjc.wso2.identity.service.rest.service.DeleteUserService;
-import com.hkjc.wso2.identity.service.rest.service.FindPasswordService;
-import com.hkjc.wso2.identity.service.rest.service.FindUsersService;
 import com.hkjc.wso2.identity.service.rest.service.GetAuthenticateService;
-import com.hkjc.wso2.identity.service.rest.service.ResetPasswordService;
 import com.hkjc.wso2.identity.service.rest.utils.MessageUtils;
 
 /**
@@ -109,45 +100,15 @@ public class UserMgtServlet extends HttpServlet {
             String relativeURI = request.getRequestURI().substring(request.getContextPath().length());
 
             // the main request mapping
-            if (relativeURI.startsWith("/new") && request.getMethod().equals("POST")) {
-                CreateUserService.createUser(request, response);
-            } else if (relativeURI.startsWith("/find") && request.getMethod().equals("GET")) {
-                FindUsersService.findUsers(request, response);
-            } else if (relativeURI.startsWith("/attribute") && request.getMethod().equals("PUT")) {
-                ChangeAttributeService.changeAttribute(request, response, relativeURI);
-            } else if (relativeURI.startsWith("/authenticate/") && request.getMethod().equals("GET")) {
+			if (relativeURI.startsWith("/authenticate") && request.getMethod().equals("POST")) {
                 GetAuthenticateService.getAuthenticate(request, response, relativeURI);
-            } else if (relativeURI.startsWith("/group") && request.getMethod().equals("PUT")) {
-                ChangeUserGroupService.changeUserGroup(request, response, relativeURI);
-            } else if (relativeURI.startsWith("/residency") && request.getMethod().equals("PUT")) {
-                ChangeResidencyService.changeResidency(request, response, relativeURI);
-            } else if (relativeURI.startsWith("/pass/change/init") && request.getMethod().equals("PUT")) {
-                ChangePasswordService.initChangePassword(request, response);
-            } else if (relativeURI.startsWith("/pass/change/update") && request.getMethod().equals("POST")) {
-                ChangePasswordService.updateChangePassword(request, response, relativeURI);
-            } else if (relativeURI.startsWith("/pass/change/submit") && request.getMethod().equals("PUT")) {
-                ChangePasswordService.submitChangePassword(request, response, relativeURI);
-            } else if (relativeURI.startsWith("/pass/reset/init") && request.getMethod().equals("PUT")) {
-                ResetPasswordService.initResetPassword(request, response);
-            } else if (relativeURI.startsWith("/pass/reset/update") && request.getMethod().equals("POST")) {
-                ResetPasswordService.updateResetPassword(request, response, relativeURI);
-            } else if (relativeURI.startsWith("/pass/reset/check") && request.getMethod().equals("PUT")) {
-                ResetPasswordService.checkResetPassword(request, response, relativeURI);
-            } else if (relativeURI.startsWith("/pass/reset/submit") && request.getMethod().equals("PUT")) {
-                ResetPasswordService.submitResetPassword(request, response, relativeURI);
-            } else if(relativeURI.startsWith("/pass/find") && request.getMethod().equals("GET")){
-                FindPasswordService.findUserPassword(request, response);
-            } else if (relativeURI.startsWith("/") && request.getMethod().equals("DELETE")) {
-                DeleteUserService.deleteUser(request, response, relativeURI);
-            } else {
-                MessageUtils.setError(request, response,
-                        404, "Service wasn't found", log);
+			} else {
+				MessageUtils.setError(response, 404, "EER00404", "Service not found", log);
             }
 
         } catch (Exception e) {
             log.error("Unknown error during user management processing", e);
-            MessageUtils.setError(request, response,
-                    500, "Unknown internal error", log);
+			MessageUtils.setError(response, 500, "EER00500", "Internal server error", log);
         }
     }
 }

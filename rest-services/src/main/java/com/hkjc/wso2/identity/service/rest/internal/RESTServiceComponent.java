@@ -24,8 +24,6 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.equinox.http.helper.ContextPathServletAdaptor;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.http.HttpService;
-import org.wso2.carbon.apimgt.impl.APIManagerConfigurationService;
-import org.wso2.carbon.apimgt.impl.internal.ServiceReferenceHolder;
 import org.wso2.carbon.user.core.service.RealmService;
 
 import com.hkjc.wso2.identity.service.rest.AppMgtServlet;
@@ -55,133 +53,8 @@ public class RESTServiceComponent {
      * It use ${IS_HOME}/repository/conf/api-manager.xml
      */
     public class RESTConfiguration {
-        private String key;
-        private String smsRequestor;
-        private String smsSourceAppPassword;
-        private String smsRequestBranch;
-        private String smsURL;
-        private String templateURL;
-        private String consentCreateURL;
-        private String consentCheckURL;
-        private String vpbplusFindURL;
-        private String customerInfoURL;
-        private String smsTemplateID;
-        private String smsMessageType;
-        private String reset_passURL;
-        private boolean isOptionsInitiated = false;
 
-        public String getSmsMessageType() {
-            if (!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return smsMessageType;
-        }
 
-        public String getTemplateURL() {
-            if (!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return templateURL;
-        }
-
-        public String getconsentCreateURL() {
-            if (!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return consentCreateURL;
-        }
-
-        public String getconsentCheckURL() {
-            if (!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return consentCheckURL;
-        }
-
-        public String getVpbplusFindURL(){
-            if(!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return vpbplusFindURL;
-        }
-
-        public String getCustomerInfoURL() {
-            if(!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return customerInfoURL;
-        }
-
-        public String getReset_passURL() {
-            if(!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return reset_passURL;
-        }
-
-        public String getSmsTemplateID() {
-            if (!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return smsTemplateID;
-        }
-
-        public String getSmsURL() {
-            if (!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return smsURL;
-        }
-
-        public String getSmsRequestor() {
-            if (!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return smsRequestor;
-        }
-
-        public String getSmsSourceAppPassword() {
-            if (!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return smsSourceAppPassword;
-        }
-
-        public String getSmsRequestBranch() {
-            if (!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return smsRequestBranch;
-        }
-
-        public String getKey() {
-            if (!isOptionsInitiated) {
-                initiateOptions();
-            }
-            return key;
-        }
-
-        private void initiateOptions() {
-            APIManagerConfigurationService configurationService = ServiceReferenceHolder.getInstance().getAPIManagerConfigurationService();
-            if (configurationService != null) {
-                key = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.AES.Key").get(0);
-                smsRequestor = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.SMS.Requestor").get(0);
-                smsSourceAppPassword = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.SMS.SourceAppPassword").get(0);
-                smsRequestBranch = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.SMS.RequestBranch").get(0);
-                smsMessageType = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.SMS.MessageType").get(0);
-                smsURL = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.SMS.URL").get(0);
-                templateURL = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.Template.URL").get(0);
-                smsTemplateID = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.SMS.TemplateID").get(0);
-                consentCreateURL = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.Consent.Create.URL").get(0);
-                consentCheckURL = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.Consent.Check.URL").get(0);
-                customerInfoURL = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.Customers.Info.URL").get(0);
-                vpbplusFindURL = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.VPBPlus.Find.URL").get(0);
-                reset_passURL = configurationService.getAPIManagerConfiguration().getProperty("RESTServices.ResetPass.URL").get(0);
-                isOptionsInitiated = true;
-            } else {
-                log.debug("API Manager Configuration couldn't be read successfully for CORSValve.");
-            }
-        }
 
     }
 
@@ -233,6 +106,8 @@ public class RESTServiceComponent {
         } catch (Throwable e) {
             log.error("REST Services bundle activation Failed", e);
         }
+
+		log.info("REST Services bundle activation success");
     }
 
 

@@ -110,7 +110,6 @@
                         <Import-Package>
                             javax.servlet,
                             javax.servlet.http,
-                            org.wso2.carbon.apimgt.*,
                             *;resolution:=optional
                         </Import-Package>
                         <Private-Package>
@@ -121,7 +120,6 @@
                             com.hkjc.wso2.identity.service.rest.*;
                             version="1.0.0"
                         </Export-Package>
-                        <DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>
                 </configuration>
             </plugin>
