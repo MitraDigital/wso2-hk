@@ -13,7 +13,7 @@ ${IS_HOME}/repository/components/lib/jackson-annotations-2.9.4.jar
 ${IS_HOME}/repository/components/lib/jackson-databind-2.9.4.jar  
 ${IS_HOME}/repository/components/lib/jackson-core-2.9.4.jar  
 
-# add below to repository/conf/deployment.toml (IS 5.9.0 and above)
+### Add below to /repository/conf/deployment.toml (IS 5.9.0 and above)
 
-[resource_access_control]
+[resource_access_control]\
 default_access = "allow"
