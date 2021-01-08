@@ -66,6 +66,7 @@ public class GetAuthenticateService {
 			Claim[] claims;
 			try {
 				claims = UserStoreUtils.getUser(username);
+
 			} catch (Exception e) {
 				log.error("Something wrong with userstore interaction", e);
 				MessageUtils.setError(response, 500, "EER00500", "Error on claims reading", log);
